@@ -7,7 +7,7 @@ Translated on Fri Oct 23
 """
 
 import numpy as np
-from ....util.SEBESOLWEIGCommonFiles import Solweig_v2015_metdata_noload as metload
+from ..UTIL import Solweig_v2015_metdata_noload as metload
 from ....util.SEBESOLWEIGCommonFiles.diffusefraction import diffusefraction
 
 

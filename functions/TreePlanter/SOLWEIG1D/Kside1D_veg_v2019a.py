@@ -42,6 +42,7 @@ def Kside_veg_v2019a(radI, radD, radG, shadow, svfS, svfW, svfN, svfE, svfEveg, 
         KsideI = shadow * 0
 
     ### Diffuse and reflected radiation ###
+    ### Equation 3 third line in Lindberg 2011 ? (influence of veg)
     [viktveg, viktwall] = Kvikt_veg(svfE, svfEveg, vikttot)
     svfviktbuvegE = (viktwall + (viktveg) * (1 - psi))
 

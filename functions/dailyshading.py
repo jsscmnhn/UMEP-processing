@@ -1,11 +1,11 @@
 import datetime as dt
 from builtins import range
 
-from ..util import shadowingfunctions as shadow
-from ..util.SEBESOLWEIGCommonFiles.shadowingfunction_wallheight_13 import shadowingfunction_wallheight_13
-from ..util.SEBESOLWEIGCommonFiles.shadowingfunction_wallheight_23 import shadowingfunction_wallheight_23
-from ..util.misc import saveraster
-from ..util.SEBESOLWEIGCommonFiles import sun_position as sp
+from util import shadowingfunctions as shadow
+from functions.SOLWEIGpython.UTIL.shadowingfunction_wallheight_13 import shadowingfunction_wallheight_13
+from functions.SOLWEIGpython.UTIL.shadowingfunction_wallheight_23 import shadowingfunction_wallheight_23
+from util.misc import saveraster
+from functions.SOLWEIGpython.UTIL import sun_position as sp
 import numpy as np
 
 

@@ -5,7 +5,7 @@ from osgeo import osr
 
 
 def writeRunInfo(folderPath, filepath_dsm, gdal_dsm, usevegdem, filePath_cdsm, trunkfile, filePath_tdsm, lat, lon, UTC,
-                 landcover, filePath_lc, metfileexist, filePath_metfile, metdata, plugin_dir, absK, absL, albedo_b,
+                 landcover, filePath_lc, metfileexist, filePath_metfile, metdata, absK, absL, albedo_b,
                  albedo_g, ewall, eground, onlyglobal, trunkratio, trans, rows, cols, pos, elvis, cyl, demforbuild, ani):
 
     # with open(folderPath + '/RunInfoSOLWEIG.txt', 'w') as file:           	#FO#
@@ -63,7 +63,7 @@ def writeRunInfo(folderPath, filepath_dsm, gdal_dsm, usevegdem, filePath_cdsm, t
             file.write('Vegetation scheme inactive')
             file.write('\n')
         if landcover == 1:
-            file.write('Landcover scheme active. Parameters taken from: ' + plugin_dir + "/landcoverclasses_2016a.txt")
+            file.write('Landcover scheme active. Parameters taken from: /landcoverclasses_2016a.txt')
             file.write('\n')
             file.write('Landcover grid: ' + filePath_lc)
             file.write('\n')

@@ -1,7 +1,7 @@
 import numpy as np
 import os
-from ....util.SEBESOLWEIGCommonFiles.clearnessindex_2013b import clearnessindex_2013b
-from ....util.SEBESOLWEIGCommonFiles import Solweig_v2015_metdata_noload as metload
+from functions.SOLWEIGpython.UTIL.clearnessindex_2013b import clearnessindex_2013b
+from ...SOLWEIGpython.UTIL import Solweig_v2015_metdata_noload as metload
 from ..SOLWEIG1D import Solweig1D_2019a_calc as so
 from ....util.SEBESOLWEIGCommonFiles.create_patches import create_patches
 

@@ -4,7 +4,7 @@ import numpy as np
 # import matplotlib.pylab as plt
 # from numba import jit
 
-def shadowingfunctionglobalradiation(a, azimuth, altitude, scale, feedback, forsvf):
+def shadowingfunctionglobalradiation(a, azimuth, altitude, scale, forsvf):
 
     #%This m.file calculates shadows on a DEM
     #% conversion
@@ -43,7 +43,7 @@ def shadowingfunctionglobalradiation(a, azimuth, altitude, scale, feedback, fors
     #% main loop
     while (amaxvalue >= dz and np.abs(dx) < sizex and np.abs(dy) < sizey):
         if forsvf == 0:
-            feedback.setProgress(int(index * total))
+            print(int(index * total))
             # dlg.progressBar.setValue(index)
     #while np.logical_and(np.logical_and(amaxvalue >= dz, np.abs(dx) <= sizex), np.abs(dy) <= sizey):(np.logical_and(amaxvalue >= dz, np.abs(dx) <= sizex), np.abs(dy) <= sizey):
         #if np.logical_or(np.logical_and(pibyfour <= azimuth, azimuth < threetimespibyfour), np.logical_and(fivetimespibyfour <= azimuth, azimuth < seventimespibyfour)):
@@ -81,23 +81,7 @@ def shadowingfunctionglobalradiation(a, azimuth, altitude, scale, feedback, fors
     return sh
 
 # @jit(nopython=True)
-def shadowingfunction_20(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue, bush, feedback, forsvf):
-
-    # plt.ion()
-    # fig = plt.figure(figsize=(24, 7))
-    # plt.axis('image')
-    # ax1 = plt.subplot(2, 3, 1)
-    # ax2 = plt.subplot(2, 3, 2)
-    # ax3 = plt.subplot(2, 3, 3)
-    # ax4 = plt.subplot(2, 3, 4)
-    # ax5 = plt.subplot(2, 3, 5)
-    # ax6 = plt.subplot(2, 3, 6)
-    # ax1.title.set_text('fabovea')
-    # ax2.title.set_text('gabovea')
-    # ax3.title.set_text('vegsh at ' + str(altitude))
-    # ax4.title.set_text('lastfabovea')
-    # ax5.title.set_text('lastgabovea')
-    # ax6.title.set_text('vegdem')
+def shadowingfunction_20(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue, bush, forsvf):
 
     # This function casts shadows on buildings and vegetation units.
     # New capability to deal with pergolas 20210827
@@ -115,7 +99,6 @@ def shadowingfunction_20(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue
     if forsvf == 0:
         barstep = np.max([sizex, sizey])
         total = 100. / barstep
-        feedback.setProgress(0)
         # dlg.progressBar.setRange(0, barstep)
         # dlg.progressBar.setValue(0)
 
@@ -155,7 +138,7 @@ def shadowingfunction_20(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue
     # main loop
     while (amaxvalue >= dz) and (np.abs(dx) < sizex) and (np.abs(dy) < sizey):
         if forsvf == 0:
-            feedback.setProgress(int(index * total)) #dlg.progressBar.setValue(index)
+            print(int(index * total)) #dlg.progressBar.setValue(index)
         if ((pibyfour <= azimuth) and (azimuth < threetimespibyfour) or (fivetimespibyfour <= azimuth) and (azimuth < seventimespibyfour)):
             dy = signsinazimuth * index
             dx = -1. * signcosazimuth * np.abs(np.round(index / tanazimuth))
@@ -207,21 +190,6 @@ def shadowingfunction_20(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue
         vegsh[(vegsh * sh > 0.)] = 0.
         vbshvegsh = vegsh + vbshvegsh # removing shadows 'behind' buildings
 
-        # im1 = ax1.imshow(fabovea)
-        # im2 = ax2.imshow(gabovea)
-        # im3 = ax3.imshow(vegsh)
-        # im4 = ax4.imshow(lastfabovea)
-        # im5 = ax5.imshow(lastgabovea)
-        # im6 = ax6.imshow(vegshtest)
-        # im1 = ax1.imshow(tempvegdem)
-        # im2 = ax2.imshow(tempvegdem2)
-        # im3 = ax3.imshow(vegsh)
-        # im4 = ax4.imshow(templastfabovea)
-        # im5 = ax5.imshow(templastgabovea)
-        # im6 = ax6.imshow(vegshtest)
-        # plt.show()
-        # plt.pause(0.05)
-
         index += 1.
 
     sh = 1.-sh
@@ -257,7 +225,6 @@ def shadowingfunction_20(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue
 
 
 def shadowingfunction_20_old(a, vegdem, vegdem2, azimuth, altitude, scale, amaxvalue, bush, dlg, forsvf):
-
     #% This function casts shadows on buildings and vegetation units
     #% conversion
     degrees = np.pi/180.

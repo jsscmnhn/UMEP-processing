@@ -30,6 +30,7 @@ __copyright__ = '(C) 2020 by Fredrik Lindberg'
 
 __revision__ = '$Format:%H$'
 
+'''
 from qgis.PyQt.QtCore import QCoreApplication, QDate, QTime, Qt, QVariant
 from qgis.core import (QgsProcessing,
                        QgsProcessingAlgorithm,
@@ -47,21 +48,19 @@ from qgis.core import (QgsProcessing,
                        QgsProcessingParameterField,
                        QgsProcessingParameterRasterLayer,
                        QgsVectorLayer)
-from processing.gui.wrappers import WidgetWrapper
-from qgis.PyQt.QtWidgets import QDateEdit, QTimeEdit
+'''
+# from processing.gui.wrappers import WidgetWrapper
+# from qgis.PyQt.QtWidgets import QDateEdit, QTimeEdit
 import numpy as np
 from osgeo import gdal, osr
-from osgeo.gdalconst import *
 import os
-from qgis.PyQt.QtGui import QIcon
+# from qgis.PyQt.QtGui import QIcon
 import inspect
-from pathlib import Path, PurePath
-from ..util.misc import get_ders, saveraster
+from pathlib import Path
+from ..util.misc import saveraster
 import zipfile
-from osgeo.gdalconst import *
-from ..util.SEBESOLWEIGCommonFiles.Solweig_v2015_metdata_noload import Solweig_2015a_metdata_noload
-from ..util.SEBESOLWEIGCommonFiles import Solweig_v2015_metdata_noload as metload
-from ..util.SEBESOLWEIGCommonFiles.clearnessindex_2013b import clearnessindex_2013b
+from functions.SOLWEIGpython.UTIL.Solweig_v2015_metdata_noload import Solweig_2015a_metdata_noload
+from functions.SOLWEIGpython.UTIL.clearnessindex_2013b import clearnessindex_2013b
 from ..functions.SOLWEIGpython.Tgmaps_v1 import Tgmaps_v1
 from ..functions.SOLWEIGpython import Solweig_2022a_calc_forprocessing as so
 from ..functions.SOLWEIGpython import WriteMetadataSOLWEIG
@@ -69,7 +68,7 @@ from ..functions.SOLWEIGpython import PET_calculations as p
 from ..functions.SOLWEIGpython import UTCI_calculations as utci
 from ..functions.SOLWEIGpython.CirclePlotBar import PolarBarPlot
 import matplotlib.pyplot as plt
-from shutil import copyfile, rmtree
+from shutil import rmtree
 import string
 import random
 
@@ -474,7 +473,7 @@ class ProcessingSOLWEIGAlgorithm(QgsProcessingAlgorithm):
             vegsizey = vegdsm.shape[1]
 
             if not (vegsizex == sizex) & (vegsizey == sizey):
-                raise QgsProcessingException("Error in Vegetation Canopy DSM: All rasters must be of same extent and resolution")
+                raise ("Error in Vegetation Canopy DSM: All rasters must be of same extent and resolution")
 
             if vegdsm2 is not None:
                 gdal.AllRegister()
@@ -1020,34 +1019,6 @@ class ProcessingSOLWEIGAlgorithm(QgsProcessingAlgorithm):
                         Tgmap1, Tgmap1E, Tgmap1S, Tgmap1W, Tgmap1N, CI, TgOut1, diffsh, shmat, vegshmat, vbshvegshmat, 
                         anisotropic_sky, asvf, patch_option)
 
-            # Tmrt, Kdown, Kup, Ldown, Lup, Tg, ea, esky, I0, CI, shadow, firstdaytime, timestepdec, timeadd, \
-            #         Tgmap1, Tgmap1E, Tgmap1S, Tgmap1W, Tgmap1N, Keast, Ksouth, Kwest, Knorth, Least, \
-            #         Lsouth, Lwest, Lnorth, KsideI, TgOut1, TgOut, radIout, radDout = so.Solweig_2021a_calc(
-            #             i, dsm, scale, rows, cols, svf, svfN, svfW, svfE, svfS, svfveg,
-            #             svfNveg, svfEveg, svfSveg, svfWveg, svfaveg, svfEaveg, svfSaveg, svfWaveg, svfNaveg,
-            #             vegdsm, vegdsm2, albedo_b, absK, absL, ewall, Fside, Fup, Fcyl, altitude[0][i],
-            #             azimuth[0][i], zen[0][i], jday[0][i], usevegdem, onlyglobal, buildings, location,
-            #             psi[0][i], landcover, lcgrid, dectime[i], altmax[0][i], wallaspect,
-            #             wallheight, cyl, elvis, Ta[i], RH[i], radG[i], radD[i], radI[i], P[i], amaxvalue,
-            #             bush, Twater, TgK, Tstart, alb_grid, emis_grid, TgK_wall, Tstart_wall, TmaxLST,
-            #             TmaxLST_wall, first, second, svfalfa, svfbuveg, firstdaytime, timeadd, timestepdec, 
-            #             Tgmap1, Tgmap1E, Tgmap1S, Tgmap1W, Tgmap1N, CI, TgOut1, diffsh, ani)
-
-
-
-            # Tmrt, Kdown, Kup, Ldown, Lup, Tg, ea, esky, I0, CI, shadow, firstdaytime, timestepdec, timeadd, \
-            # Tgmap1, timeaddE, Tgmap1E, timeaddS, Tgmap1S, timeaddW, Tgmap1W, timeaddN, Tgmap1N, \
-            # Keast, Ksouth, Kwest, Knorth, Least, Lsouth, Lwest, Lnorth, KsideI, TgOut1, TgOut, radIout, radDout \
-            #     = so.Solweig_2019a_calc(i, dsm, scale, rows, cols, svf, svfN, svfW, svfE, svfS, svfveg,
-            #         svfNveg, svfEveg, svfSveg, svfWveg, svfaveg, svfEaveg, svfSaveg, svfWaveg, svfNaveg,
-            #         vegdsm, vegdsm2, albedo_b, absK, absL, ewall, Fside, Fup, Fcyl, altitude[0][i],
-            #         azimuth[0][i], zen[0][i], jday[0][i], usevegdem, onlyglobal, buildings, location,
-            #         psi[0][i], landcover, lcgrid, dectime[i], altmax[0][i], waspect,
-            #         wheight, cyl, elvis, Ta[i], RH[i], radG[i], radD[i], radI[i], P[i], amaxvalue,
-            #         bush, Twater, TgK, Tstart, alb_grid, emis_grid, TgK_wall, Tstart_wall, TmaxLST,
-            #         TmaxLST_wall, first, second, svfalfa, svfbuveg, firstdaytime, timeadd, timeaddE, timeaddS,
-            #         timeaddW, timeaddN, timestepdec, Tgmap1, Tgmap1E, Tgmap1S, Tgmap1W, Tgmap1N, CI, TgOut1, diffsh, ani)
-
             # Save I0 for I0 vs. Kdown output plot to check if UTC is off
             if i < first_unique_day.shape[0]:
                 I0_array[i] = I0
@@ -1058,58 +1029,6 @@ class ProcessingSOLWEIGAlgorithm(QgsProcessingAlgorithm):
                 w = 'D'
             else:
                 w = 'N'
-
-            # # Write to POIs
-            # if not poisxy is None:
-            #     for k in range(0, poisxy.shape[0]):
-            #         poi_save = np.zeros((1, 35))
-            #         poi_save[0, 0] = YYYY[0][i]
-            #         poi_save[0, 1] = jday[0][i]
-            #         poi_save[0, 2] = hours[i]
-            #         poi_save[0, 3] = minu[i]
-            #         poi_save[0, 4] = dectime[i]
-            #         poi_save[0, 5] = altitude[0][i]
-            #         poi_save[0, 6] = azimuth[0][i]
-            #         poi_save[0, 7] = radIout
-            #         poi_save[0, 8] = radDout
-            #         poi_save[0, 9] = radG[i]
-            #         poi_save[0, 10] = Kdown[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 11] = Kup[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 12] = Keast[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 13] = Ksouth[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 14] = Kwest[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 15] = Knorth[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 16] = Ldown[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 17] = Lup[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 18] = Least[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 19] = Lsouth[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 20] = Lwest[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 21] = Lnorth[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 22] = Ta[i]
-            #         poi_save[0, 23] = TgOut[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 24] = RH[i]
-            #         poi_save[0, 25] = esky
-            #         poi_save[0, 26] = Tmrt[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 27] = I0
-            #         poi_save[0, 28] = CI
-            #         poi_save[0, 29] = shadow[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 30] = svf[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 31] = svfbuveg[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         poi_save[0, 32] = KsideI[int(poisxy[k, 2]), int(poisxy[k, 1])]
-            #         # Recalculating wind speed based on powerlaw
-            #         WsPET = (1.1 / sensorheight) ** 0.2 * Ws[i]
-            #         WsUTCI = (10. / sensorheight) ** 0.2 * Ws[i]
-            #         resultPET = p._PET(Ta[i], RH[i], Tmrt[int(poisxy[k, 2]), int(poisxy[k, 1])], WsPET,
-            #                             mbody, age, ht, activity, clo, sex)
-            #         poi_save[0, 33] = resultPET
-            #         resultUTCI = utci.utci_calculator(Ta[i], RH[i], Tmrt[int(poisxy[k, 2]), int(poisxy[k, 1])],
-            #                                             WsUTCI)
-            #         poi_save[0, 34] = resultUTCI
-            #         data_out = outputDir + '/POI_' + str(poiname[k]) + '.txt'
-            #         # f_handle = file(data_out, 'a')
-            #         f_handle = open(data_out, 'ab')
-            #         np.savetxt(f_handle, poi_save, fmt=numformat)
-            #         f_handle.close()
 
             # Write to POIs
             if not poisxy is None:

@@ -30,9 +30,8 @@ __copyright__ = '(C) 2020 by Fredrik Lindberg'
 
 __revision__ = '$Format:%H$'
 
-from qgis.PyQt.QtCore import QCoreApplication, QDate, QTime, Qt, QVariant
-from qgis.core import (QgsProcessing,
-                       QgsProcessingAlgorithm,
+from qgis.PyQt.QtCore import QCoreApplication, Qt, QVariant
+from qgis.core import (QgsProcessingAlgorithm,
                        QgsProcessingParameterBoolean,
                        QgsProcessingParameterNumber,
                        QgsProcessingParameterFolderDestination,
@@ -41,11 +40,8 @@ from qgis.core import (QgsProcessing,
                        QgsProcessingParameterFile,
                        QgsProcessingException,
                        QgsProcessingParameterRasterLayer)
-from processing.gui.wrappers import WidgetWrapper
-from qgis.PyQt.QtWidgets import QDateEdit, QTimeEdit
 import numpy as np
 from osgeo import gdal, osr
-from osgeo.gdalconst import *
 import os
 from qgis.PyQt.QtGui import QIcon
 import inspect
@@ -53,7 +49,7 @@ from pathlib import Path
 from ..functions.SEBEfiles import SEBE_2015a_calc_forprocessing as sebe
 from ..functions.SEBEfiles.sunmapcreator_2015a import sunmapcreator_2015a
 from ..functions.SEBEfiles import WriteMetaDataSEBE
-from ..util.SEBESOLWEIGCommonFiles.Solweig_v2015_metdata_noload import Solweig_2015a_metdata_noload
+from functions.SOLWEIGpython.UTIL.Solweig_v2015_metdata_noload import Solweig_2015a_metdata_noload
 from ..util.misc import get_ders, saveraster
 
 

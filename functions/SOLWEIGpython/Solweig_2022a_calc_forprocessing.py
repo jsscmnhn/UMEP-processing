@@ -2,19 +2,17 @@ from __future__ import absolute_import
 
 import numpy as np
 from .daylen import daylen
-from ...util.SEBESOLWEIGCommonFiles.clearnessindex_2013b import clearnessindex_2013b
-from ...util.SEBESOLWEIGCommonFiles.diffusefraction import diffusefraction
-from ...util.SEBESOLWEIGCommonFiles.shadowingfunction_wallheight_13 import shadowingfunction_wallheight_13
-from ...util.SEBESOLWEIGCommonFiles.shadowingfunction_wallheight_23 import shadowingfunction_wallheight_23
+from functions.SOLWEIGpython.UTIL.clearnessindex_2013b import clearnessindex_2013b
+from functions.SOLWEIGpython.UTIL.diffusefraction import diffusefraction
+from functions.SOLWEIGpython.UTIL.shadowingfunction_wallheight_13 import shadowingfunction_wallheight_13
+from functions.SOLWEIGpython.UTIL.shadowingfunction_wallheight_23 import shadowingfunction_wallheight_23
 from .gvf_2018a import gvf_2018a
 from .cylindric_wedge import cylindric_wedge
 from .TsWaveDelay_2015a import TsWaveDelay_2015a
 from .Kup_veg_2015a import Kup_veg_2015a
-# from .Lside_veg_v2015a import Lside_veg_v2015a
-# from .Kside_veg_v2019a import Kside_veg_v2019a
 from .Kside_veg_v2022a import Kside_veg_v2022a
-from ...util.SEBESOLWEIGCommonFiles.Perez_v3 import Perez_v3
-from ...util.SEBESOLWEIGCommonFiles.create_patches import create_patches
+from functions.SOLWEIGpython.UTIL.Perez_v3 import Perez_v3
+from functions.SOLWEIGpython.UTIL.create_patches import create_patches
 
 # Anisotropic longwave
 from .Lcyl_v2022a import Lcyl_v2022a
@@ -28,14 +26,6 @@ def Solweig_2022a_calc(i, dsm, scale, rows, cols, svf, svfN, svfW, svfE, svfS, s
                        amaxvalue, bush, Twater, TgK, Tstart, alb_grid, emis_grid, TgK_wall, Tstart_wall, TmaxLST,
                        TmaxLST_wall, first, second, svfalfa, svfbuveg, firstdaytime, timeadd, timestepdec, Tgmap1, 
                        Tgmap1E, Tgmap1S, Tgmap1W, Tgmap1N, CI, TgOut1, diffsh, shmat, vegshmat, vbshvegshmat, anisotropic_sky, asvf, patch_option):
-
-#def Solweig_2021a_calc(i, dsm, scale, rows, cols, svf, svfN, svfW, svfE, svfS, svfveg, svfNveg, svfEveg, svfSveg,
-#                       svfWveg, svfaveg, svfEaveg, svfSaveg, svfWaveg, svfNaveg, vegdem, vegdem2, albedo_b, absK, absL,
-#                       ewall, Fside, Fup, Fcyl, altitude, azimuth, zen, jday, usevegdem, onlyglobal, buildings, location, psi,
-#                       landcover, lc_grid, dectime, altmax, dirwalls, walls, cyl, elvis, Ta, RH, radG, radD, radI, P,
-#                       amaxvalue, bush, Twater, TgK, Tstart, alb_grid, emis_grid, TgK_wall, Tstart_wall, TmaxLST,
-#                       TmaxLST_wall, first, second, svfalfa, svfbuveg, firstdaytime, timeadd, timestepdec, Tgmap1, 
-#                       Tgmap1E, Tgmap1S, Tgmap1W, Tgmap1N, CI, TgOut1, diffsh, ani):
 
     # This is the core function of the SOLWEIG model
     # 2016-Aug-28
@@ -57,7 +47,7 @@ def Solweig_2022a_calc(i, dsm, scale, rows, cols, svf, svfN, svfW, svfE, svfS, s
     # ewall = Emissivity of building walls
     # Fside = The angular factors between a person and the surrounding surfaces
     # Fup = The angular factors between a person and the surrounding surfaces
-    # Fcyl = The angular factors between a culidric person and the surrounding surfaces
+    # Fcyl = The angular factors between a cylindric person and the surrounding surfaces
     # altitude = Sun altitude (degree)
     # azimuth = Sun azimuth (degree)
     # zen = Sun zenith angle (radians)
